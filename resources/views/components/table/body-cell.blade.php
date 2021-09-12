@@ -1,0 +1,1 @@
+<td class="px-3 py-3 whitespace-nowrap">{{ $slot }}</td>

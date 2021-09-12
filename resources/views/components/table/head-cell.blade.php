@@ -1,0 +1,1 @@
+<th scope="col" class="px-3 py-3 text-xs font-medium tracking-wider text-left text-gray-300 uppercase">{{ $slot }}</th>

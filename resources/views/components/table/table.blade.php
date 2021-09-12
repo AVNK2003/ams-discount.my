@@ -1,0 +1,1 @@
+<table class="min-w-full overflow-x-scroll divide-y divide-gray-500">{{ $slot }}</table>

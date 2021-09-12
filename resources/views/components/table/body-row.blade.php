@@ -1,0 +1,1 @@
+<tr class="transition-all duration-300 hover:bg-black">{{ $slot }}</tr>
