@@ -11,10 +11,6 @@
     box-sizing: border-box;
 }
 
-.w-350px {
-    width: 350px;
-}
-
 .article a {
     text-decoration: none;
     color: #00a1d2;

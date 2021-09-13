@@ -62,7 +62,7 @@
                  x-transition:leave-end="transform opacity-0 scale-95"
                  @click.away="open = false"
                  class="absolute left-0 w-full origin-top rounded-md shadow-lg z-30">
-                <div class="w-350px px-2 py-2 bg-black wrap rounded-md shadow">
+                <div class="w-[350px] px-2 py-2 bg-black wrap rounded-md shadow">
 
                     @foreach(cache()->remember('links-categories',60*60*24,function (){
     return \App\Models\Category::all('name','slug')->sortBy('name');
