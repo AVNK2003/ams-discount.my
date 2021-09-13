@@ -23,4 +23,20 @@ class BotUser extends Model
     {
         return Carbon::parse($value)->translatedFormat('d M Y, H:i');
     }
+
+    public static function getAllUsers()
+    {
+        return self::all(['id', 'user_id', 'user_name', 'first_name', 'last_name', 'active', 'created_at', 'updated_at']);
+    }
+
+    public static function getActiveUsers()
+    {
+        return self::where('active', true)->get(['id', 'user_id', 'user_name', 'first_name', 'last_name', 'active', 'created_at', 'updated_at']);
+    }
+
+    public function toggleActive()
+    {
+        $this->timestamps = false;
+        $this->update(['active' => !$this->active]);
+    }
 }

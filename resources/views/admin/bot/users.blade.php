@@ -49,14 +49,22 @@
 									<span class="text-sm">{{ $user->updated_at->diffForHumans() }}</span>
 								</x-table.body-cell>
 
-                                <x-table.body-cell>
-                                    @if($user->active)
-                                        <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-600 bg-green-100 rounded-full">Активен</span>
-                                    @else
-                                        <span class="inline-flex px-2 text-xs font-semibold leading-5 text-red-600 bg-red-100 rounded-full">Заблокирован</span>
-                                    @endif
-                                </x-table.body-cell>
-                            </x-table.body-row>
+								<x-table.body-cell>
+									<form action="{{ route('toggleActiveUser', $user) }}" method="POST">
+										@method('PUT')
+										@csrf
+										<button class="focus:outline-none" type="submit">
+											@if($user->active)
+												<span
+														class="inline-flex px-2 text-xs font-semibold leading-5 text-green-600 bg-green-100 rounded-full">Активен</span>
+											@else
+												<span
+														class="inline-flex px-2 text-xs font-semibold leading-5 text-red-600 bg-red-100 rounded-full">Неактивен</span>
+											@endif
+										</button>
+									</form>
+								</x-table.body-cell>
+							</x-table.body-row>
 						@endforeach
 						</tbody>
 					</x-table.table>

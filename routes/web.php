@@ -87,8 +87,11 @@ Route::prefix('cabinet')->middleware(['auth'])->group(
 //Страница с настройками бота
             Route::get('bot', [\App\Http\Controllers\BotController::class, 'index'])->name('bot');
 //Страница с пользователями бота
-            Route::get('bot/users', [\App\Http\Controllers\BotController::class, 'users'])
+            Route::get('bot/users', [\App\Http\Controllers\BotUserController::class, 'index'])
                 ->name('botUsers');
+//Переключить статус пользователя Активен/Неактивен
+            Route::put('bot/users/{botUser}', [\App\Http\Controllers\BotUserController::class, 'toggleActive'])
+                ->name('toggleActiveUser');
 //Страница для установки токена бота
             Route::get('bot/token', [\App\Http\Controllers\BotController::class, 'setToken'])
                 ->name('setToken');

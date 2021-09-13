@@ -26,15 +26,6 @@ class BotController extends Controller
         return view('admin.bot.index', compact('botUsers'));
     }
 
-    public function users()
-    {
-        $users = BotUser::all([
-            'id', 'created_at', 'updated_at', 'user_id', 'user_name', 'first_name', 'last_name', 'active'
-        ]);
-        $title = 'Пользователи бота';
-        return view('admin.bot.users', compact('users', 'title'));
-    }
-
     public function setToken()
     {
         $token = Bot::where('name', 'token')->first();
@@ -111,12 +102,24 @@ class BotController extends Controller
 //            'text' => json_encode($update, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT),
 //        ]);
 
+        $user_id = $update->getChat()->id;
+
         if ($update->getChat()->type === 'private') {
-            BotUser::updateOrCreate(['user_id' => $update->getChat()->id], [
+            BotUser::updateOrCreate(['user_id' => $user_id], [
                 'user_name' => $update->getChat()->username,
                 'first_name' => $update->getChat()->firstName,
                 'last_name' => $update->getChat()->lastName,
             ])->touch();
+        }
+
+        $botUser = BotUser::where('user_id', $user_id)->first();
+
+        if (!$botUser->active) {
+            $bot->sendMessage([
+                'chat_id' => $user_id,
+                'text' => 'Администратор ограничил Вам возможность использования данного бота'
+            ]);
+            return 'ok';
         }
 
         $msg_send = [
@@ -632,7 +635,7 @@ class BotController extends Controller
             ->where('date_end', '>', now())
             ->orderBy('priority', 'desc')
             ->orderBy('created_at', 'desc')
-            ->skip($skip)->take($perPage)->get();;
+            ->skip($skip)->take($perPage)->get();
     }
 }
 //.\ngrok http  --host-header=ams-discount.my 80
